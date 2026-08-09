@@ -1,0 +1,47 @@
+{
+  "name": "vehicle-registry-portal",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "nuxt dev",
+    "lint": "nuxt prepare && eslint . --fix && nuxt typecheck",
+    "test": "vitest dev",
+    "test:update-snapshots": "vitest --update",
+    "test:coverage": "vitest run --coverage",
+    "prod:build": "nuxt build",
+    "prod:preview": "yarn prod:build && nuxt preview",
+    "ci:lint": "eslint . && nuxt typecheck",
+    "ci:test": "vitest run --passWithNoTests",
+    "ci:postinstall": "nuxt prepare",
+    "ci:coverage": "vitest run --coverage",
+    "clean": "yarn clean:dist && rimraf .nuxt .output",
+    "clean:dist": "rimraf dist .output"
+  },
+  "dependencies": {
+    "@tailwindcss/vite": "^4.3.3",
+    "nuxt": "^4.2.0",
+    "tailwindcss": "^4.3.3",
+    "vue": "^3.5.15",
+    "vue-router": "^4.5.1"
+  },
+  "devDependencies": {
+    "@nuxt/eslint": "^1.4.1",
+    "@nuxt/test-utils": "^3.19.1",
+    "@types/node": "^24.9.2",
+    "@vitest/coverage-v8": "^3.2.2",
+    "@vue/test-utils": "^2.4.6",
+    "eslint": "^9.28.0",
+    "eslint-plugin-vue": "^10.1.0",
+    "eslint-plugin-vue-scoped-css": "^2.10.0",
+    "jsdom": "^26.1.0",
+    "rimraf": "^6.0.1",
+    "typescript": "^5.8.3",
+    "vitest": "^3.2.2",
+    "vue-tsc": "^2.2.10"
+  },
+  "packageManager": "yarn@4.5.3",
+  "resolutions": {
+    "vite-plugin-checker": "0.13.0"
+  }
+}

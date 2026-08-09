@@ -1,0 +1,13 @@
+# macOS
+.DS_Store
+
+# Editor / AI assistant local state
+.claude
+.idea
+.vscode
+
+# Word lock files
+~$*
+
+# Node (prototype/.gitignore covers the rest in detail)
+node_modules

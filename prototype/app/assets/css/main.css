@@ -1,0 +1,22 @@
+@import "tailwindcss";
+
+/* Registry palette — matches ../buyer-portal-mockup.html.
+   Warm paper neutrals with a deep maroon government accent; semantic
+   colours for verdict states (pass / warning / alert / suppressed). */
+@theme {
+  --color-paper: #faf9f6;
+  --color-panel: #ffffff;
+  --color-ink: #22252a;
+  --color-muted: #6d7178;
+  --color-line: #e3e1da;
+  --color-accent: #7a1f2b;
+
+  --color-pass: #1a7f4b;
+  --color-pass-bg: #e8f4ed;
+  --color-warn: #9a5b00;
+  --color-warn-bg: #faf1e0;
+  --color-alert: #b3261e;
+  --color-alert-bg: #fbeae9;
+  --color-supp: #4a5568;
+  --color-supp-bg: #eceef2;
+}
