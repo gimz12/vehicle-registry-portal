@@ -27,6 +27,25 @@ yarn install
 yarn dev        # http://localhost:3000
 ```
 
+## Working on this repo
+
+`main` is protected: direct pushes are rejected and changes arrive through a pull
+request. After cloning, enable the local guard that stops you committing on `main`
+by mistake:
+
+```bash
+git config core.hooksPath .githooks
+```
+
+Then the loop for any change is:
+
+```bash
+git switch -c my-change
+git commit -m "..."
+git push -u origin my-change
+gh pr create --fill && gh pr merge --squash --delete-branch
+```
+
 ## Author
 
 S.N.I.W.M.K.V. Illankoon — NIBM / Coventry University
