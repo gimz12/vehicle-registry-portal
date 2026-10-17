@@ -1,0 +1,3 @@
+BenchmarkDisclosureChaincodeMemory-10    	      98	  11720363 ns/op	 3976892 B/op	   33577 allocs/op
+BenchmarkDisclosureBaseline-10           	    2220	    543565 ns/op	 2886793 B/op	    3419 allocs/op
+BenchmarkBaselineVerify-10               	       9	 116655685 ns/op	 4694779 B/op	   29973 allocs/op
