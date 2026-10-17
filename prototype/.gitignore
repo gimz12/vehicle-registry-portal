@@ -29,6 +29,15 @@ package-lock.json
 
 .coverage
 
-# AI assistant instructions (local only)
+# Editor local state
+CLAUDE.md
+__pycache__
 .claude
-.ai_instructions
+
+# Fabric tooling lives at ~/fabric-registry (see network/README.md)
+fabric/
+offchain/dev-store/
+
+# Custody service tokens, DB passwords and HMAC keys (offchain/custody/setup-env.sh)
+offchain/custody/.env
+offchain/custody/portal.env

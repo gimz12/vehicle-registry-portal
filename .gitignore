@@ -1,7 +1,7 @@
 # macOS
 .DS_Store
 
-# Editor / AI assistant local state
+# Editor local state
 .claude
 .idea
 .vscode
