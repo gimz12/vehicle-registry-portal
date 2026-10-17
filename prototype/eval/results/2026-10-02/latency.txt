@@ -1,0 +1,20 @@
+goos: darwin
+goarch: arm64
+pkg: github.com/gimz12/vehicle-registry-portal/prototype/chaincode/registry
+cpu: Apple M4
+BenchmarkDisclosureChaincodeMemory-10    	      99	  11978593 ns/op	 3977698 B/op	   33580 allocs/op
+BenchmarkDisclosureBaseline-10           	    2167	    561010 ns/op	 2884574 B/op	    3413 allocs/op
+BenchmarkBaselineVerify-10               	       9	 120231009 ns/op	 4697157 B/op	   29983 allocs/op
+PASS
+ok  	github.com/gimz12/vehicle-registry-portal/prototype/chaincode/registry	4.663s
+
+# Live Fabric gateway round trip (two-org test network, Fabric 2.5, Apple M4), measured by the portal on 2 Oct 2026
+# evaluateTransaction GetDisclosureFor, seeded two-vehicle fleet; first call includes gRPC connection setup
+fabric GetDisclosureFor BUYER 25 ms
+fabric GetDisclosureFor DMT 14 ms
+fabric GetDisclosureFor POLICE 13 ms
+fabric GetDisclosureFor INSURER 11 ms
+fabric GetDisclosureFor INSURER 8 ms
+fabric GetDisclosureFor POLICE 11 ms
+# owner-scope read committed via submitTransaction (endorse + order + commit):
+fabric GetDisclosureFor POLICE (submit) 2086 ms

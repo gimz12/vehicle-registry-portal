@@ -1,0 +1,278 @@
+[
+  {
+    "id": "C01-copa-identity-insertion",
+    "title": "Identity of an illegally imported vehicle inserted into a second registration",
+    "source": "COPA",
+    "rule": "F4",
+    "outcome": {
+      "P0": "DETECTED",
+      "P1": "DETECTED",
+      "P2": "DETECTED",
+      "P3": "DETECTED"
+    }
+  },
+  {
+    "id": "C02-ciaboc-no-provenance",
+    "title": "Registration with no Customs or assembler record",
+    "source": "CIABOC",
+    "rule": "F5",
+    "outcome": {
+      "P0": "DETECTED",
+      "P1": "DETECTED",
+      "P2": "DETECTED",
+      "P3": "DETECTED"
+    }
+  },
+  {
+    "id": "C03-backdated-import",
+    "title": "Import record committed after the registration it claims to support",
+    "source": "CIABOC",
+    "rule": "F5",
+    "outcome": {
+      "P0": "DETECTED",
+      "P1": "DETECTED",
+      "P2": "DETECTED",
+      "P3": "DETECTED"
+    }
+  },
+  {
+    "id": "C04-odometer-rollback",
+    "title": "Second VET reading below the first",
+    "source": "DMT",
+    "rule": "F1a",
+    "outcome": {
+      "P0": "DETECTED",
+      "P1": "DETECTED",
+      "P2": "DETECTED",
+      "P3": "SUPPRESSED"
+    }
+  },
+  {
+    "id": "C05-mileage-blocker",
+    "title": "Identical reading after more than a year",
+    "source": "DMT",
+    "rule": "F1c",
+    "outcome": {
+      "P0": "DETECTED",
+      "P1": "DETECTED",
+      "P2": "DETECTED",
+      "P3": "SUPPRESSED"
+    }
+  },
+  {
+    "id": "C06-implausible-rate",
+    "title": "450,000 km accumulated in one year",
+    "source": "DMT",
+    "rule": "F1b",
+    "outcome": {
+      "P0": "DETECTED",
+      "P1": "DETECTED",
+      "P2": "DETECTED",
+      "P3": "SUPPRESSED"
+    }
+  },
+  {
+    "id": "C08-stolen-transfer",
+    "title": "Ownership transfer while the vehicle stands flagged stolen",
+    "source": "DMT",
+    "rule": "F2",
+    "outcome": {
+      "P0": "DETECTED",
+      "P1": "DETECTED",
+      "P2": "DETECTED",
+      "P3": "SUPPRESSED"
+    }
+  },
+  {
+    "id": "C10-unanchored-claim",
+    "title": "Claim citing neither police report nor assessor attestation",
+    "source": "DMT",
+    "rule": "F3a",
+    "outcome": {
+      "P0": "DETECTED",
+      "P1": "DETECTED",
+      "P2": "DETECTED",
+      "P3": "DETECTED"
+    }
+  },
+  {
+    "id": "C10-unanchored-claim",
+    "title": "Claim citing neither police report nor assessor attestation",
+    "source": "DMT",
+    "rule": "F3b",
+    "outcome": {
+      "P0": "DETECTED",
+      "P1": "DETECTED",
+      "P2": "DETECTED",
+      "P3": "SUPPRESSED"
+    }
+  },
+  {
+    "id": "C11-assessor-only-claim",
+    "title": "Claim resting on an insurer assessor attestation only",
+    "source": "DMT",
+    "rule": "F3a",
+    "outcome": {
+      "P0": "DETECTED",
+      "P1": "DETECTED",
+      "P2": "GAP",
+      "P3": "GAP"
+    }
+  },
+  {
+    "id": "C12-duplicate-anchor",
+    "title": "Two insurers' claims cite the same police report",
+    "source": "DMT",
+    "rule": "F3c",
+    "outcome": {
+      "P0": "DETECTED",
+      "P1": "DETECTED",
+      "P2": "SUPPRESSED",
+      "P3": "SUPPRESSED"
+    }
+  },
+  {
+    "id": "C12-duplicate-anchor",
+    "title": "Two insurers' claims cite the same police report",
+    "source": "DMT",
+    "rule": "F3d",
+    "outcome": {
+      "P0": "PASS",
+      "P1": "PASS",
+      "P2": "FALSE_POSITIVE",
+      "P3": "SUPPRESSED"
+    }
+  },
+  {
+    "id": "C13-cross-insurer-window",
+    "title": "Two accidents and two insurers within 30 days",
+    "source": "DMT",
+    "rule": "F3d",
+    "outcome": {
+      "P0": "DETECTED",
+      "P1": "DETECTED",
+      "P2": "DETECTED",
+      "P3": "SUPPRESSED"
+    }
+  },
+  {
+    "id": "C14-accident-no-claim",
+    "title": "Police accident report with no insurance claim",
+    "source": "Design",
+    "rule": "F3b",
+    "outcome": {
+      "P0": "DETECTED",
+      "P1": "DETECTED",
+      "P2": "DETECTED",
+      "P3": "SUPPRESSED"
+    }
+  },
+  {
+    "id": "C15-serial-rollback",
+    "title": "Three vehicles of one owner, each with a rollback within two years",
+    "source": "DMT",
+    "rule": "F1a",
+    "outcome": {
+      "P0": "DETECTED",
+      "P1": "DETECTED",
+      "P2": "DETECTED",
+      "P3": "SUPPRESSED"
+    }
+  },
+  {
+    "id": "C15-serial-rollback",
+    "title": "Three vehicles of one owner, each with a rollback within two years",
+    "source": "DMT",
+    "rule": "F6a",
+    "outcome": {
+      "P0": "DETECTED",
+      "P1": "SUPPRESSED",
+      "P2": "SUPPRESSED",
+      "P3": "SUPPRESSED"
+    }
+  },
+  {
+    "id": "C16-serial-assessor",
+    "title": "Claims on two of one owner's vehicles share an assessor",
+    "source": "DMT",
+    "rule": "F6b",
+    "outcome": {
+      "P0": "DETECTED",
+      "P1": "SUPPRESSED",
+      "P2": "SUPPRESSED",
+      "P3": "SUPPRESSED"
+    }
+  },
+  {
+    "id": "C17-retired-resurrection",
+    "title": "Chassis of a retired vehicle registered again",
+    "source": "DMT",
+    "rule": "F4",
+    "outcome": {
+      "P0": "DETECTED",
+      "P1": "DETECTED",
+      "P2": "DETECTED",
+      "P3": "DETECTED"
+    }
+  },
+  {
+    "id": "C18-engine-only-duplicate",
+    "title": "Engine index already registered to another vehicle",
+    "source": "COPA",
+    "rule": "F4",
+    "outcome": {
+      "P0": "DETECTED",
+      "P1": "DETECTED",
+      "P2": "DETECTED",
+      "P3": "DETECTED"
+    }
+  },
+  {
+    "id": "C19-honest-on-the-spot-claim",
+    "title": "Claim filed before the police report was committed (expected false positive)",
+    "source": "Design",
+    "rule": "F3a",
+    "outcome": {
+      "P0": "FALSE_POSITIVE",
+      "P1": "FALSE_POSITIVE",
+      "P2": "GAP",
+      "P3": "GAP"
+    }
+  },
+  {
+    "id": "C22-theft-flag-no-transfer",
+    "title": "Vehicle flagged stolen, never transferred (transfer refused at write)",
+    "source": "DMT",
+    "rule": "F2",
+    "outcome": {
+      "P0": "DETECTED",
+      "P1": "DETECTED",
+      "P2": "DETECTED",
+      "P3": "SUPPRESSED"
+    }
+  },
+  {
+    "id": "C25-repeated-stolen-transfers",
+    "title": "Two transfers while flagged, then cleared",
+    "source": "DMT",
+    "rule": "F2",
+    "outcome": {
+      "P0": "DETECTED",
+      "P1": "DETECTED",
+      "P2": "DETECTED",
+      "P3": "SUPPRESSED"
+    }
+  },
+  {
+    "id": "C26-serial-rollback-outside-window",
+    "title": "Two rollbacks by one owner more than two years apart",
+    "source": "Design",
+    "rule": "F1a",
+    "outcome": {
+      "P0": "DETECTED",
+      "P1": "DETECTED",
+      "P2": "DETECTED",
+      "P3": "SUPPRESSED"
+    }
+  }
+]
