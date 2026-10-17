@@ -19,9 +19,14 @@
     "clean:dist": "rimraf dist .output"
   },
   "dependencies": {
+    "3d-force-graph": "^1.80.1",
+    "@grpc/grpc-js": "^1.14.4",
+    "@hyperledger/fabric-gateway": "^1.12.0",
     "@tailwindcss/vite": "^4.3.3",
     "nuxt": "^4.2.0",
+    "pg": "^8.13.1",
     "tailwindcss": "^4.3.3",
+    "three-spritetext": "^1.10.0",
     "vue": "^3.5.15",
     "vue-router": "^4.5.1"
   },
@@ -29,6 +34,8 @@
     "@nuxt/eslint": "^1.4.1",
     "@nuxt/test-utils": "^3.19.1",
     "@types/node": "^24.9.2",
+    "@types/pg": "^8.11.10",
+    "@types/three": "^0.186.0",
     "@vitest/coverage-v8": "^3.2.2",
     "@vue/test-utils": "^2.4.6",
     "eslint": "^9.28.0",
