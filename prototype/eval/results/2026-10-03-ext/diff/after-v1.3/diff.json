@@ -1,0 +1,522 @@
+{
+  "cells": [
+    {
+      "purpose": "BUYER",
+      "profile": "P2",
+      "perturbation": "add accident",
+      "capability": "ASSET",
+      "capabilityExposed": true,
+      "vehiclesPerturbed": 33,
+      "vehiclesWithAnyFlip": 0,
+      "flipsByField": {},
+      "leaks": 0
+    },
+    {
+      "purpose": "BUYER",
+      "profile": "P2",
+      "perturbation": "add claim",
+      "capability": "ASSET",
+      "capabilityExposed": true,
+      "vehiclesPerturbed": 33,
+      "vehiclesWithAnyFlip": 33,
+      "flipsByField": {
+        "event seq": 25,
+        "evidence tier": 30,
+        "list counts": 33,
+        "outcome": 25,
+        "reason": 25,
+        "strength": 25,
+        "structural": 25
+      },
+      "leaks": 0
+    },
+    {
+      "purpose": "BUYER",
+      "profile": "P2",
+      "perturbation": "add theft flag",
+      "capability": "ASSET",
+      "capabilityExposed": true,
+      "vehiclesPerturbed": 33,
+      "vehiclesWithAnyFlip": 33,
+      "flipsByField": {
+        "detail": 32,
+        "event seq": 32,
+        "evidence tier": 29,
+        "list counts": 31,
+        "outcome": 30,
+        "reason": 29,
+        "status bits": 33,
+        "strength": 30
+      },
+      "leaks": 0
+    },
+    {
+      "purpose": "BUYER",
+      "profile": "P2",
+      "perturbation": "change owner pseudonym",
+      "capability": "OWNER",
+      "capabilityExposed": false,
+      "vehiclesPerturbed": 33,
+      "vehiclesWithAnyFlip": 0,
+      "flipsByField": {},
+      "leaks": 0
+    },
+    {
+      "purpose": "BUYER",
+      "profile": "P2",
+      "perturbation": "re-anchor a claim",
+      "capability": "INCIDENT",
+      "capabilityExposed": false,
+      "vehiclesPerturbed": 7,
+      "vehiclesWithAnyFlip": 0,
+      "flipsByField": {},
+      "leaks": 0
+    },
+    {
+      "purpose": "BUYER",
+      "profile": "P2",
+      "perturbation": "remove accident",
+      "capability": "ASSET",
+      "capabilityExposed": true,
+      "vehiclesPerturbed": 8,
+      "vehiclesWithAnyFlip": 0,
+      "flipsByField": {},
+      "leaks": 0
+    },
+    {
+      "purpose": "BUYER",
+      "profile": "P2",
+      "perturbation": "shift last reading",
+      "capability": "ASSET",
+      "capabilityExposed": true,
+      "vehiclesPerturbed": 16,
+      "vehiclesWithAnyFlip": 14,
+      "flipsByField": {
+        "detail": 14,
+        "event seq": 7,
+        "list counts": 6,
+        "outcome": 7,
+        "strength": 7
+      },
+      "leaks": 0
+    },
+    {
+      "purpose": "DMT",
+      "profile": "P2",
+      "perturbation": "add accident",
+      "capability": "ASSET",
+      "capabilityExposed": true,
+      "vehiclesPerturbed": 33,
+      "vehiclesWithAnyFlip": 0,
+      "flipsByField": {},
+      "leaks": 0
+    },
+    {
+      "purpose": "DMT",
+      "profile": "P2",
+      "perturbation": "add claim",
+      "capability": "ASSET",
+      "capabilityExposed": true,
+      "vehiclesPerturbed": 33,
+      "vehiclesWithAnyFlip": 33,
+      "flipsByField": {
+        "event seq": 25,
+        "evidence tier": 30,
+        "list counts": 33,
+        "outcome": 25,
+        "reason": 25,
+        "strength": 25,
+        "structural": 25
+      },
+      "leaks": 0
+    },
+    {
+      "purpose": "DMT",
+      "profile": "P2",
+      "perturbation": "add theft flag",
+      "capability": "ASSET",
+      "capabilityExposed": true,
+      "vehiclesPerturbed": 33,
+      "vehiclesWithAnyFlip": 33,
+      "flipsByField": {
+        "detail": 32,
+        "event seq": 32,
+        "evidence tier": 29,
+        "list counts": 31,
+        "outcome": 30,
+        "reason": 29,
+        "status bits": 33,
+        "strength": 30
+      },
+      "leaks": 0
+    },
+    {
+      "purpose": "DMT",
+      "profile": "P2",
+      "perturbation": "change owner pseudonym",
+      "capability": "OWNER",
+      "capabilityExposed": false,
+      "vehiclesPerturbed": 33,
+      "vehiclesWithAnyFlip": 0,
+      "flipsByField": {},
+      "leaks": 0
+    },
+    {
+      "purpose": "DMT",
+      "profile": "P2",
+      "perturbation": "re-anchor a claim",
+      "capability": "INCIDENT",
+      "capabilityExposed": false,
+      "vehiclesPerturbed": 7,
+      "vehiclesWithAnyFlip": 0,
+      "flipsByField": {},
+      "leaks": 0
+    },
+    {
+      "purpose": "DMT",
+      "profile": "P2",
+      "perturbation": "remove accident",
+      "capability": "ASSET",
+      "capabilityExposed": true,
+      "vehiclesPerturbed": 8,
+      "vehiclesWithAnyFlip": 0,
+      "flipsByField": {},
+      "leaks": 0
+    },
+    {
+      "purpose": "DMT",
+      "profile": "P2",
+      "perturbation": "shift last reading",
+      "capability": "ASSET",
+      "capabilityExposed": true,
+      "vehiclesPerturbed": 16,
+      "vehiclesWithAnyFlip": 14,
+      "flipsByField": {
+        "detail": 14,
+        "event seq": 7,
+        "list counts": 6,
+        "outcome": 7,
+        "strength": 7
+      },
+      "leaks": 0
+    },
+    {
+      "purpose": "INSURER",
+      "profile": "P1",
+      "perturbation": "add accident",
+      "capability": "ASSET",
+      "capabilityExposed": true,
+      "vehiclesPerturbed": 8,
+      "vehiclesWithAnyFlip": 8,
+      "flipsByField": {
+        "detail": 7,
+        "event seq": 7,
+        "evidence tier": 1,
+        "list counts": 8,
+        "outcome": 7,
+        "reason": 1,
+        "strength": 1
+      },
+      "leaks": 0
+    },
+    {
+      "purpose": "INSURER",
+      "profile": "P1",
+      "perturbation": "add claim",
+      "capability": "ASSET",
+      "capabilityExposed": true,
+      "vehiclesPerturbed": 8,
+      "vehiclesWithAnyFlip": 8,
+      "flipsByField": {
+        "detail": 5,
+        "event seq": 5,
+        "evidence tier": 7,
+        "list counts": 8,
+        "outcome": 5,
+        "strength": 5
+      },
+      "leaks": 0
+    },
+    {
+      "purpose": "INSURER",
+      "profile": "P1",
+      "perturbation": "add theft flag",
+      "capability": "ASSET",
+      "capabilityExposed": true,
+      "vehiclesPerturbed": 8,
+      "vehiclesWithAnyFlip": 8,
+      "flipsByField": {
+        "detail": 8,
+        "event seq": 8,
+        "evidence tier": 8,
+        "list counts": 8,
+        "outcome": 8,
+        "reason": 8,
+        "status bits": 8,
+        "strength": 8
+      },
+      "leaks": 0
+    },
+    {
+      "purpose": "INSURER",
+      "profile": "P1",
+      "perturbation": "change owner pseudonym",
+      "capability": "OWNER",
+      "capabilityExposed": false,
+      "vehiclesPerturbed": 8,
+      "vehiclesWithAnyFlip": 0,
+      "flipsByField": {},
+      "leaks": 0
+    },
+    {
+      "purpose": "INSURER",
+      "profile": "P1",
+      "perturbation": "re-anchor a claim",
+      "capability": "INCIDENT",
+      "capabilityExposed": true,
+      "vehiclesPerturbed": 7,
+      "vehiclesWithAnyFlip": 6,
+      "flipsByField": {
+        "detail": 6,
+        "event seq": 6,
+        "list counts": 6,
+        "outcome": 6,
+        "strength": 5
+      },
+      "leaks": 0
+    },
+    {
+      "purpose": "INSURER",
+      "profile": "P1",
+      "perturbation": "remove accident",
+      "capability": "ASSET",
+      "capabilityExposed": true,
+      "vehiclesPerturbed": 7,
+      "vehiclesWithAnyFlip": 7,
+      "flipsByField": {
+        "detail": 6,
+        "event seq": 6,
+        "evidence tier": 6,
+        "list counts": 7,
+        "outcome": 7,
+        "reason": 6,
+        "strength": 7
+      },
+      "leaks": 0
+    },
+    {
+      "purpose": "INSURER",
+      "profile": "P2",
+      "perturbation": "add accident",
+      "capability": "ASSET",
+      "capabilityExposed": true,
+      "vehiclesPerturbed": 25,
+      "vehiclesWithAnyFlip": 0,
+      "flipsByField": {},
+      "leaks": 0
+    },
+    {
+      "purpose": "INSURER",
+      "profile": "P2",
+      "perturbation": "add claim",
+      "capability": "ASSET",
+      "capabilityExposed": true,
+      "vehiclesPerturbed": 25,
+      "vehiclesWithAnyFlip": 25,
+      "flipsByField": {
+        "event seq": 25,
+        "evidence tier": 25,
+        "list counts": 25,
+        "outcome": 25,
+        "reason": 25,
+        "strength": 25,
+        "structural": 25
+      },
+      "leaks": 0
+    },
+    {
+      "purpose": "INSURER",
+      "profile": "P2",
+      "perturbation": "add theft flag",
+      "capability": "ASSET",
+      "capabilityExposed": true,
+      "vehiclesPerturbed": 25,
+      "vehiclesWithAnyFlip": 25,
+      "flipsByField": {
+        "detail": 24,
+        "event seq": 24,
+        "evidence tier": 21,
+        "list counts": 23,
+        "outcome": 22,
+        "reason": 21,
+        "status bits": 25,
+        "strength": 22
+      },
+      "leaks": 0
+    },
+    {
+      "purpose": "INSURER",
+      "profile": "P2",
+      "perturbation": "change owner pseudonym",
+      "capability": "OWNER",
+      "capabilityExposed": false,
+      "vehiclesPerturbed": 25,
+      "vehiclesWithAnyFlip": 0,
+      "flipsByField": {},
+      "leaks": 0
+    },
+    {
+      "purpose": "INSURER",
+      "profile": "P2",
+      "perturbation": "remove accident",
+      "capability": "ASSET",
+      "capabilityExposed": true,
+      "vehiclesPerturbed": 1,
+      "vehiclesWithAnyFlip": 0,
+      "flipsByField": {},
+      "leaks": 0
+    },
+    {
+      "purpose": "INSURER",
+      "profile": "P2",
+      "perturbation": "shift last reading",
+      "capability": "ASSET",
+      "capabilityExposed": true,
+      "vehiclesPerturbed": 16,
+      "vehiclesWithAnyFlip": 14,
+      "flipsByField": {
+        "detail": 14,
+        "event seq": 7,
+        "list counts": 6,
+        "outcome": 7,
+        "strength": 7
+      },
+      "leaks": 0
+    },
+    {
+      "purpose": "POLICE",
+      "profile": "P1",
+      "perturbation": "add accident",
+      "capability": "ASSET",
+      "capabilityExposed": true,
+      "vehiclesPerturbed": 33,
+      "vehiclesWithAnyFlip": 33,
+      "flipsByField": {
+        "detail": 31,
+        "event seq": 31,
+        "evidence tier": 25,
+        "list counts": 33,
+        "outcome": 31,
+        "reason": 25,
+        "strength": 25
+      },
+      "leaks": 0
+    },
+    {
+      "purpose": "POLICE",
+      "profile": "P1",
+      "perturbation": "add claim",
+      "capability": "ASSET",
+      "capabilityExposed": true,
+      "vehiclesPerturbed": 33,
+      "vehiclesWithAnyFlip": 33,
+      "flipsByField": {
+        "detail": 30,
+        "event seq": 30,
+        "evidence tier": 32,
+        "list counts": 33,
+        "outcome": 30,
+        "reason": 25,
+        "strength": 30
+      },
+      "leaks": 0
+    },
+    {
+      "purpose": "POLICE",
+      "profile": "P1",
+      "perturbation": "add theft flag",
+      "capability": "ASSET",
+      "capabilityExposed": true,
+      "vehiclesPerturbed": 33,
+      "vehiclesWithAnyFlip": 33,
+      "flipsByField": {
+        "detail": 32,
+        "event seq": 32,
+        "evidence tier": 29,
+        "list counts": 31,
+        "outcome": 30,
+        "reason": 29,
+        "status bits": 33,
+        "strength": 30
+      },
+      "leaks": 0
+    },
+    {
+      "purpose": "POLICE",
+      "profile": "P1",
+      "perturbation": "change owner pseudonym",
+      "capability": "OWNER",
+      "capabilityExposed": false,
+      "vehiclesPerturbed": 33,
+      "vehiclesWithAnyFlip": 0,
+      "flipsByField": {},
+      "leaks": 0
+    },
+    {
+      "purpose": "POLICE",
+      "profile": "P1",
+      "perturbation": "re-anchor a claim",
+      "capability": "INCIDENT",
+      "capabilityExposed": true,
+      "vehiclesPerturbed": 7,
+      "vehiclesWithAnyFlip": 6,
+      "flipsByField": {
+        "detail": 6,
+        "event seq": 6,
+        "list counts": 6,
+        "outcome": 6,
+        "strength": 5
+      },
+      "leaks": 0
+    },
+    {
+      "purpose": "POLICE",
+      "profile": "P1",
+      "perturbation": "remove accident",
+      "capability": "ASSET",
+      "capabilityExposed": true,
+      "vehiclesPerturbed": 8,
+      "vehiclesWithAnyFlip": 8,
+      "flipsByField": {
+        "detail": 7,
+        "event seq": 7,
+        "evidence tier": 7,
+        "list counts": 8,
+        "outcome": 8,
+        "reason": 7,
+        "strength": 8
+      },
+      "leaks": 0
+    },
+    {
+      "purpose": "POLICE",
+      "profile": "P1",
+      "perturbation": "shift last reading",
+      "capability": "ASSET",
+      "capabilityExposed": true,
+      "vehiclesPerturbed": 16,
+      "vehiclesWithAnyFlip": 14,
+      "flipsByField": {
+        "detail": 14,
+        "event seq": 7,
+        "list counts": 6,
+        "outcome": 7,
+        "strength": 7
+      },
+      "leaks": 0
+    }
+  ],
+  "label": "after-v1.3",
+  "manifest": "760f75dc35fb7a62d14f43e8f03944484f1326f10593da08fbff51ee13ac28be",
+  "totalLeaks": 0
+}
