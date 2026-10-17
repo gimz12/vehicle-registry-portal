@@ -1,0 +1,8 @@
+=== RUN   TestParityRawStateChaincodeAppliesProfile
+    parity_raw_test.go:87: raw-state P1: 0 of 500 vehicles disagree; disagreements per rule: none
+    parity_raw_test.go:87: raw-state P2: 455 of 500 vehicles disagree; disagreements per rule: F3a=455, F3d=39
+    parity_raw_test.go:91: chaincode on raw ledger state disagrees with the harness in 494 (vehicle, rule) cells
+--- FAIL: TestParityRawStateChaincodeAppliesProfile (11.29s)
+FAIL
+FAIL	github.com/gimz12/vehicle-registry-portal/prototype/chaincode/registry	11.929s
+FAIL
