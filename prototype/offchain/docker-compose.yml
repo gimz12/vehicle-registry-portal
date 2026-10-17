@@ -1,0 +1,24 @@
+# Superseded by offchain/custody/docker-compose.yml; kept for the record. Do not run both (ports).
+services:
+  registry-db:
+    image: postgres:16-alpine
+    container_name: registry-offchain-db
+    environment:
+      POSTGRES_DB: registry
+      POSTGRES_USER: registry
+      POSTGRES_PASSWORD: registry
+      TZ: UTC
+    ports:
+      - "5433:5432"   # 5433 to avoid colliding with any local postgres
+    volumes:
+      - ./schema.sql:/docker-entrypoint-initdb.d/01-schema.sql:ro
+      - ./migrations:/migrations:ro
+      - registry_db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U registry -d registry"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  registry_db_data:
