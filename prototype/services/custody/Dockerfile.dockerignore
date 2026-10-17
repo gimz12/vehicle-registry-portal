@@ -1,0 +1,7 @@
+**
+!services/custody/package.json
+!services/custody/main.ts
+!services/custody/ledger.ts
+!services/custody/sql/**
+!server/utils/envelope.ts
+!server/utils/handles.ts
