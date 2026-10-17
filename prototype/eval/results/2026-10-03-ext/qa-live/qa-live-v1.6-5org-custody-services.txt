@@ -1,0 +1,143 @@
+== Custody mode: services
+== Input validation (no ledger round trip)
+  ok   desk: unknown agency -> 400
+  ok   desk: VET cannot report theft -> 400
+  ok   desk: register with bad NIC -> 400
+  ok   desk: register with null-like chassis -> 400
+  ok   desk: mileage without odometer -> 400
+  ok   handle: empty chassis -> 400
+  ok   handle: null-like chassis -> 400
+  ok   vehicle: bad handle -> 400
+  ok   vehicle: unknown purpose -> 400
+  ok   history: buyer refused -> 403
+  ok   escalation: reject without reason -> 400
+  ok   escalation: create without legal reference -> 400
+  ok   reveal: malformed body -> 400
+== Handle derivation
+  ok   same chassis, different spelling -> same handle
+  ok   handle is 64 hex
+== Provenance and identity gates (F5, F4)
+  ok   register before import -> refused (F5)
+  ok   customs import committed
+  ok   same chassis imported twice -> refused
+  ok   register with wrong engine for that chassis -> refused (F5, does not match the import)
+  ok   register committed
+  ok   owner record exists off-ledger
+  ok   both custody shares exist
+  ok   register same chassis again -> refused (F4)
+  ok   register other chassis with same engine -> refused (F4 engine)
+== Clean vehicle views
+  ok   buyer gets P2
+  ok   buyer sees no status banner
+  ok   insurer without a claim gets P2
+  ok   police without a case gets P1
+  ok   police with unknown case -> 403
+  ok   DMT history visible
+== Evidence and rules on committed data
+  ok   second reading below first is accepted, not rejected
+  ok   backdated reading -> refused (v1.5, F1b cannot be dodged)
+  ok   buyer sees F1a as a warning (VET evidence is E1)
+  ok   DMT emission certificate recorded
+  ok   insurer claim without evidence -> F3a (claim on insurer-c)
+  ok   claim under another insurer's name -> refused (v1.5, insurer bound to registry.party)
+  ok   police sees F3c duplicate-anchor alert
+  ok   police sees F3a unanchored claim
+  ok   insurer-a (holds a claim) gets P1
+  ok   buyer at P2 does not see F3c (incident link withheld)
+  ok   buyer: F3c appears under not performed as a structural gap
+  ok   DMT history redacts the claim's incident reference
+  ok   police history keeps it
+== Theft: flag, block, buyer visibility, clear
+  ok   clearing a theft that was never reported -> refused (v1.5)
+  ok   buyer sees stolen status
+  ok   buyer sees F2 current-theft alert
+  ok   transfer while stolen -> refused (F2 prevention)
+  ok   refused transfer leaves the stored owner record untouched
+  ok   portal refuses: DMT has no theft-clear action
+  ok   status cleared
+  ok   F2 no longer flagged after clearance
+== Transfer replaces the owner record
+  ok   transfer committed
+  ok   transfer replaced the sealed owner record
+== Escalation edge cases
+  ok   reveal on a case that does not exist -> 404
+  ok   portal refuses: VET cannot create a case
+  ok   case on a warning-only rule is refused (F1a is not an alert)
+  ok   case created on F3c
+  ok   same case id again -> refused
+  ok   owner scope on pending case -> 403
+  ok   reveal on pending case -> 403
+  ok   one approval leaves it pending
+  ok   approving twice as DMT -> refused (v1.5, one approval per side)
+  ok   second agency approves -> approved
+  ok   approving an approved case -> refused
+  ok   owner scope under approved case -> P0
+  ok   approved case used on another vehicle -> 403
+  ok   DMT presenting the case still gets only P2
+  ok   reveal returns the CURRENT owner after transfer
+  ok   reveal is marked synthetic
+  ok   access log records owner scope
+  ok   access log records identity reveal
+  ok   tampered off-ledger record -> reveal refused (409)
+  ok   restored record reveals again
+  ok   rejected case
+  ok   approving a rejected case -> refused
+  ok   reveal on rejected case -> 403
+== Write-off and retirement
+  ok   insurer writes off
+  ok   buyer sees written-off status
+  ok   transfer while written off -> refused
+  ok   insurer resolves write-off
+  ok   portal refuses: Police has no retire action
+  ok   DMT retires
+  ok   buyer sees retired status
+  ok   transfer of retired vehicle -> refused
+  ok   re-registering a retired chassis -> refused (F4 resurrection)
+== Assembler path
+  ok   portal refuses: Customs has no assembler action
+  ok   portal refuses: DMT has no assembler action (the chaincode gate is a coalition.sh row)
+  ok   assembler records its attestation
+  ok   register with CUSTOMS provenance against an assembler attestation -> refused
+  ok   register with ASSEMBLER provenance -> committed
+== v1.3: no ownership oracle
+  ok   handle never returns an owner pseudonym, even when sent a NIC
+== v1.3: owner linking through the DMT owner index
+  ok   owner index (DMT custody) holds the owner's two vehicles
+  ok   the two vehicles carry different on-chain pseudonyms
+  ok   buyer at P2: the anchored claim is a structural gap, not evaluated
+  ok   police at P1 evaluates the anchored claim
+  ok   portal refuses: Police cannot run the owner-scope predicate
+  ok   F6a predicate refused without a rollback on the vehicle
+  ok   F6b predicate over the owner's fleet: flagged
+  ok   F6b predicate at alert strength (claims cite police reports)
+  ok   the predicate returns the verdict only
+  ok   case grounded on the F6b predicate
+  ok   approved by the DMT and a second Police officer
+  ok   the DMT attested a two-vehicle fleet
+  ok   owner scope under the case groups the desk-registered fleet (F6b fires)
+== v1.3: finance flag
+  ok   DMT records finance
+  ok   buyer sees the vehicle is under finance
+  ok   portal refuses: insurer has no finance action
+  ok   transfer of a financed vehicle -> refused
+  ok   DMT records the release
+  ok   transfer after release -> committed
+  ok   the fleet changed after approval -> owner-scope read refused (403)
+  ok   the refusal names the changed fleet
+== Custody services: each organisation's own container, database and token
+  ok   DMT service without a token -> 401
+  ok   DMT service with a wrong token -> 401
+  ok   Police service with the DMT's token -> 401
+  ok   DMT service refuses the record under a pending case (its own ledger check) -> 403
+  ok   Police service refuses its half under a pending case -> 403
+  ok   Police service refuses its half under a rejected case -> 403
+  ok   DMT service refuses an approved case presented for another vehicle -> 403
+  ok   DMT service releases under the approved case after reading it on the ledger
+  ok   Police service read the case on the Police organisation's own peer
+  ok   every refusal is in the DMT service's release log
+  ok   this run's vehicle never reached the portal host's file store
+  ok   Customs keeps its internal import record in its own service
+  ok   the internal fields appear in no ledger view
+  ok   all five custody services healthy
+
+QA: 126 passed, 0 failed
