@@ -1,0 +1,12 @@
+{
+  "name": "custody-service",
+  "private": true,
+  "type": "module",
+  "description": "Per-organisation custody service (see main.ts). Installed inside its container only.",
+  "dependencies": {
+    "@grpc/grpc-js": "1.14.4",
+    "@hyperledger/fabric-gateway": "1.12.0",
+    "pg": "8.23.1",
+    "tsx": "4.23.15"
+  }
+}

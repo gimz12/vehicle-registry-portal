@@ -1,0 +1,229 @@
+# Per-organisation custody: one service and one PostgreSQL database per organisation.
+# The DMT and Police services read the ledger, so they join the Fabric network (fabric_test).
+#
+#   ./offchain/custody/setup-env.sh          # once: tokens, DB passwords, the existing HMAC keys -> .env
+#   docker compose -f offchain/custody/docker-compose.yml up -d --build --wait
+name: custody
+
+networks:
+  fabric:
+    name: fabric_test
+    external: true
+
+volumes:
+  custody_dmt_db:
+  custody_police_db:
+  custody_customs_db:
+  custody_vet_db:
+  custody_insurer_db:
+
+services:
+  custody-dmt-db:
+    container_name: custody-dmt-db
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: dmt
+      POSTGRES_USER: dmt
+      POSTGRES_PASSWORD: ${DB_PASSWORD_DMT:?run offchain/custody/setup-env.sh}
+      TZ: UTC
+    ports: ["127.0.0.1:5441:5432"]
+    volumes: [custody_dmt_db:/var/lib/postgresql/data]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U dmt -d dmt"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+    networks: [fabric]
+  custody-dmt:
+    container_name: custody-dmt
+    image: rn-bol/custody:latest
+    build:
+      context: ../..
+      dockerfile: services/custody/Dockerfile
+    environment:
+      ORG: dmt
+      PORT: "8100"
+      CUSTODY_TOKEN: ${CUSTODY_TOKEN_DMT:?run offchain/custody/setup-env.sh}
+      DATABASE_URL: postgres://dmt:${DB_PASSWORD_DMT}@custody-dmt-db:5432/dmt
+      PEER_ENDPOINT: peer0.org1.example.com:7051
+      FABRIC_ORGANIZATIONS: /fabric/peerOrganizations
+      REGISTRY_KEYS: ${REGISTRY_KEYS:?run offchain/custody/setup-env.sh}
+      # Callers other than the DMT's own portal: the Police service (record and fleet under a case)
+      # and each desk's keying credential (chassis to handle only).
+      CUSTODY_CALLER_TOKENS: police-service=${CUSTODY_TOKEN_POLICE_TO_DMT:?run offchain/custody/setup-env.sh},police-desk=${CUSTODY_TOKEN_POLICE_KEYING:?},customs-desk=${CUSTODY_TOKEN_CUSTOMS_KEYING:?},vet-desk=${CUSTODY_TOKEN_VET_KEYING:?},insurer-desk=${CUSTODY_TOKEN_INSURER_KEYING:?},buyer-portal=${CUSTODY_TOKEN_BUYER_PORTAL:?run offchain/custody/setup-env.sh}
+      # The Police service, reached directly to hand over the Police half.
+      PARTNER_URL: http://custody-police:8100
+      PARTNER_TOKEN: ${CUSTODY_TOKEN_DMT_TO_POLICE:?run offchain/custody/setup-env.sh}
+    volumes:
+      # Least privilege: only this organisation's User1 identity and its peer's TLS root, not the admin.
+      - ${FABRIC_ORGANIZATIONS:-~/fabric-registry/fabric-samples/test-network/organizations/peerOrganizations}/org1.example.com/users/User1@org1.example.com/msp:/fabric/peerOrganizations/org1.example.com/users/User1@org1.example.com/msp:ro
+      - ${FABRIC_ORGANIZATIONS:-~/fabric-registry/fabric-samples/test-network/organizations/peerOrganizations}/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt:/fabric/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt:ro
+    ports: ["127.0.0.1:8101:8100"]
+    depends_on:
+      custody-dmt-db: {condition: service_healthy}
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://127.0.0.1:8100/health >/dev/null || exit 1"]
+      interval: 5s
+      timeout: 4s
+      retries: 20
+    restart: unless-stopped
+    networks: [fabric]
+  custody-police-db:
+    container_name: custody-police-db
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: police
+      POSTGRES_USER: police
+      POSTGRES_PASSWORD: ${DB_PASSWORD_POLICE:?run offchain/custody/setup-env.sh}
+      TZ: UTC
+    ports: ["127.0.0.1:5442:5432"]
+    volumes: [custody_police_db:/var/lib/postgresql/data]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U police -d police"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+    networks: [fabric]
+  custody-police:
+    container_name: custody-police
+    image: rn-bol/custody:latest
+    build:
+      context: ../..
+      dockerfile: services/custody/Dockerfile
+    environment:
+      ORG: police
+      PORT: "8100"
+      CUSTODY_TOKEN: ${CUSTODY_TOKEN_POLICE:?run offchain/custody/setup-env.sh}
+      DATABASE_URL: postgres://police:${DB_PASSWORD_POLICE}@custody-police-db:5432/police
+      PEER_ENDPOINT: peer0.org2.example.com:9051
+      FABRIC_ORGANIZATIONS: /fabric/peerOrganizations
+      # The only caller besides the Police's own portal: the DMT service, handing over the Police half.
+      CUSTODY_CALLER_TOKENS: dmt-service=${CUSTODY_TOKEN_DMT_TO_POLICE:?run offchain/custody/setup-env.sh}
+      # The DMT service, reached directly for the record and the DMT half under an approved case.
+      PARTNER_URL: http://custody-dmt:8100
+      PARTNER_TOKEN: ${CUSTODY_TOKEN_POLICE_TO_DMT:?run offchain/custody/setup-env.sh}
+    volumes:
+      # Least privilege: only this organisation's User1 identity and its peer's TLS root, not the admin.
+      - ${FABRIC_ORGANIZATIONS:-~/fabric-registry/fabric-samples/test-network/organizations/peerOrganizations}/org2.example.com/users/User1@org2.example.com/msp:/fabric/peerOrganizations/org2.example.com/users/User1@org2.example.com/msp:ro
+      - ${FABRIC_ORGANIZATIONS:-~/fabric-registry/fabric-samples/test-network/organizations/peerOrganizations}/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt:/fabric/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt:ro
+    ports: ["127.0.0.1:8102:8100"]
+    depends_on:
+      custody-police-db: {condition: service_healthy}
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://127.0.0.1:8100/health >/dev/null || exit 1"]
+      interval: 5s
+      timeout: 4s
+      retries: 20
+    restart: unless-stopped
+    networks: [fabric]
+  custody-customs-db:
+    container_name: custody-customs-db
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: customs
+      POSTGRES_USER: customs
+      POSTGRES_PASSWORD: ${DB_PASSWORD_CUSTOMS:?run offchain/custody/setup-env.sh}
+      TZ: UTC
+    ports: ["127.0.0.1:5443:5432"]
+    volumes: [custody_customs_db:/var/lib/postgresql/data]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U customs -d customs"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+    networks: [fabric]
+  custody-customs:
+    container_name: custody-customs
+    image: rn-bol/custody:latest
+    build:
+      context: ../..
+      dockerfile: services/custody/Dockerfile
+    environment:
+      ORG: customs
+      PORT: "8100"
+      CUSTODY_TOKEN: ${CUSTODY_TOKEN_CUSTOMS:?run offchain/custody/setup-env.sh}
+      DATABASE_URL: postgres://customs:${DB_PASSWORD_CUSTOMS}@custody-customs-db:5432/customs
+    ports: ["127.0.0.1:8103:8100"]
+    depends_on:
+      custody-customs-db: {condition: service_healthy}
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://127.0.0.1:8100/health >/dev/null || exit 1"]
+      interval: 5s
+      timeout: 4s
+      retries: 20
+    restart: unless-stopped
+    networks: [fabric]
+  custody-vet-db:
+    container_name: custody-vet-db
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: vet
+      POSTGRES_USER: vet
+      POSTGRES_PASSWORD: ${DB_PASSWORD_VET:?run offchain/custody/setup-env.sh}
+      TZ: UTC
+    ports: ["127.0.0.1:5444:5432"]
+    volumes: [custody_vet_db:/var/lib/postgresql/data]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U vet -d vet"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+    networks: [fabric]
+  custody-vet:
+    container_name: custody-vet
+    image: rn-bol/custody:latest
+    build:
+      context: ../..
+      dockerfile: services/custody/Dockerfile
+    environment:
+      ORG: vet
+      PORT: "8100"
+      CUSTODY_TOKEN: ${CUSTODY_TOKEN_VET:?run offchain/custody/setup-env.sh}
+      DATABASE_URL: postgres://vet:${DB_PASSWORD_VET}@custody-vet-db:5432/vet
+    ports: ["127.0.0.1:8104:8100"]
+    depends_on:
+      custody-vet-db: {condition: service_healthy}
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://127.0.0.1:8100/health >/dev/null || exit 1"]
+      interval: 5s
+      timeout: 4s
+      retries: 20
+    restart: unless-stopped
+    networks: [fabric]
+  custody-insurer-db:
+    container_name: custody-insurer-db
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: insurer
+      POSTGRES_USER: insurer
+      POSTGRES_PASSWORD: ${DB_PASSWORD_INSURER:?run offchain/custody/setup-env.sh}
+      TZ: UTC
+    ports: ["127.0.0.1:5445:5432"]
+    volumes: [custody_insurer_db:/var/lib/postgresql/data]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U insurer -d insurer"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+    networks: [fabric]
+  custody-insurer:
+    container_name: custody-insurer
+    image: rn-bol/custody:latest
+    build:
+      context: ../..
+      dockerfile: services/custody/Dockerfile
+    environment:
+      ORG: insurer
+      PORT: "8100"
+      CUSTODY_TOKEN: ${CUSTODY_TOKEN_INSURER:?run offchain/custody/setup-env.sh}
+      DATABASE_URL: postgres://insurer:${DB_PASSWORD_INSURER}@custody-insurer-db:5432/insurer
+    ports: ["127.0.0.1:8105:8100"]
+    depends_on:
+      custody-insurer-db: {condition: service_healthy}
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://127.0.0.1:8100/health >/dev/null || exit 1"]
+      interval: 5s
+      timeout: 4s
+      retries: 20
+    restart: unless-stopped
+    networks: [fabric]
