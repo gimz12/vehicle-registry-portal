@@ -1,0 +1,6 @@
+=== RUN   TestParityRawStateChaincodeAppliesProfile
+    parity_raw_test.go:87: raw-state P1: 0 of 500 vehicles disagree; disagreements per rule: none
+    parity_raw_test.go:87: raw-state P2: 0 of 500 vehicles disagree; disagreements per rule: none
+--- PASS: TestParityRawStateChaincodeAppliesProfile (12.51s)
+PASS
+ok  	github.com/gimz12/vehicle-registry-portal/prototype/chaincode/registry	12.803s
