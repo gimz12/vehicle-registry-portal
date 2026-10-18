@@ -1,22 +1,181 @@
 @import "tailwindcss";
 
-/* Registry palette — matches ../buyer-portal-mockup.html.
-   Warm paper neutrals with a deep maroon government accent; semantic
-   colours for verdict states (pass / warning / alert / suppressed). */
-@theme {
-  --color-paper: #faf9f6;
-  --color-panel: #ffffff;
-  --color-ink: #22252a;
-  --color-muted: #6d7178;
-  --color-line: #e3e1da;
-  --color-accent: #7a1f2b;
+/* ------------------------------------------------------------------
+   Registry design tokens.
+   One government accent (the maroon the project already owns), a cool
+   form-paper neutral, and four verdict colours. Dark mode mirrors the
+   buyer-portal mockup. Tailwind utilities read these through @theme, so
+   `bg-paper`, `text-pass`, `border-line` etc. switch with the scheme.
+   ------------------------------------------------------------------ */
+:root {
+  --paper: #f3f2ee;
+  --panel: #ffffff;
+  --panel-2: #eceae3;
+  --ink: #1c1f24;
+  --muted: #5f646d;
+  --line: #d8d5cc;
+  --line-strong: #b9b5a9;
+  --accent: #7a1f2b;
+  --accent-deep: #5a1620;
+  --accent-ink: #ffffff;
+  --accent-wash: #f4e9ea;
 
-  --color-pass: #1a7f4b;
-  --color-pass-bg: #e8f4ed;
-  --color-warn: #9a5b00;
-  --color-warn-bg: #faf1e0;
-  --color-alert: #b3261e;
-  --color-alert-bg: #fbeae9;
-  --color-supp: #4a5568;
-  --color-supp-bg: #eceef2;
+  --pass: #17744a;
+  --pass-bg: #e6f3ec;
+  --warn: #8f5400;
+  --warn-bg: #f8efdd;
+  --alert: #b3261e;
+  --alert-bg: #fae8e6;
+  --supp: #4b5563;
+  --supp-bg: #e9ebef;
+
+  --focus: #2458c5;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #16171a;
+    --panel: #1e2024;
+    --panel-2: #26292f;
+    --ink: #e9e7e1;
+    --muted: #9ba0a8;
+    --line: #33363d;
+    --line-strong: #4a4e57;
+    --accent: #d98a94;
+    --accent-deep: #e9a6ae;
+    --accent-ink: #1f1214;
+    --accent-wash: #2b1b1e;
+
+    --pass: #5cc389;
+    --pass-bg: #16281e;
+    --warn: #e0a34f;
+    --warn-bg: #2b2213;
+    --alert: #ef7b74;
+    --alert-bg: #301715;
+    --supp: #aab3c2;
+    --supp-bg: #24272e;
+
+    --focus: #8ab4ff;
+  }
+}
+
+@theme inline {
+  --font-sans: "IBM Plex Sans", "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --color-paper: var(--paper);
+  --color-panel: var(--panel);
+  --color-panel-2: var(--panel-2);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-accent: var(--accent);
+  --color-accent-deep: var(--accent-deep);
+  --color-accent-ink: var(--accent-ink);
+  --color-accent-wash: var(--accent-wash);
+
+  --color-pass: var(--pass);
+  --color-pass-bg: var(--pass-bg);
+  --color-warn: var(--warn);
+  --color-warn-bg: var(--warn-bg);
+  --color-alert: var(--alert);
+  --color-alert-bg: var(--alert-bg);
+  --color-supp: var(--supp);
+  --color-supp-bg: var(--supp-bg);
+
+  --color-focus: var(--focus);
+
+  --radius-sm: 3px;
+  --radius-md: 6px;
+}
+
+@layer base {
+  html {
+    font-family: var(--font-sans);
+    font-size: 15px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+  }
+  h1, h2, h3 {
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+  }
+  :focus-visible {
+    outline: 2px solid var(--focus);
+    outline-offset: 2px;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { transition: none !important; animation: none !important; }
+  }
+}
+
+/* Small, shared interface pieces. Kept as classes so the templates stay
+   readable and the states (hover, focus, disabled) are defined once. */
+/* Base pieces are utilities so the variants below can @apply them. */
+@utility btn {
+  @apply inline-flex items-center justify-center gap-2 rounded-sm px-4 py-2 text-sm font-semibold
+    transition-colors disabled:cursor-not-allowed disabled:opacity-45;
+}
+@utility chip {
+  @apply inline-flex items-center rounded-sm px-2 py-0.5 text-xs font-semibold leading-5;
+}
+
+@layer components {
+  .btn-primary {
+    @apply btn bg-accent text-accent-ink hover:bg-accent-deep;
+  }
+  .btn-secondary {
+    @apply btn border border-line-strong bg-panel text-ink hover:border-accent hover:text-accent;
+  }
+  .btn-quiet {
+    @apply btn px-2 text-accent hover:underline;
+  }
+  .field {
+    @apply w-full rounded-sm border border-line-strong bg-panel px-3 py-2 text-ink
+      placeholder:text-muted/70 focus:border-accent;
+  }
+  .label {
+    @apply mb-1 block text-sm font-medium text-ink;
+  }
+  .help {
+    @apply text-sm text-muted;
+  }
+  .surface {
+    @apply border border-line bg-panel;
+  }
+  .chip-pass { @apply chip bg-pass-bg text-pass; }
+  .chip-warn { @apply chip bg-warn-bg text-warn; }
+  .chip-alert { @apply chip bg-alert-bg text-alert; }
+  .chip-supp { @apply chip bg-supp-bg text-supp; }
+  .handle {
+    @apply font-mono text-[13px] break-all text-muted;
+  }
+  .prose-tight p + p { @apply mt-2; }
+}
+
+/* Chart tokens (dataviz method, validated pair): series 1 blue = Corpus A,
+   series 2 orange = Corpus B. Class/status colours carry a text label as well. */
+:root {
+  --series-1: #2a78d6;
+  --series-2: #eb6834;
+  --viz-grid: #e1e0d9;
+  --viz-axis: #c3c2b7;
+  --viz-good: #0ca30c;
+  --viz-warning: #fab219;
+  --viz-neutral: #b4b2a9;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --series-1: #3987e5;
+    --series-2: #d95926;
+    --viz-grid: #2c2c2a;
+    --viz-axis: #383835;
+    --viz-neutral: #5f5e5a;
+  }
 }
