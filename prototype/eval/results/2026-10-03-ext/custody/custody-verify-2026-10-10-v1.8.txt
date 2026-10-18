@@ -1,0 +1,23 @@
+== Custody verification 2026-10-10T17:07Z
+  ok   DMT key halves, one per owner record (61)
+  ok   Police key halves, one per owner record
+  ok   owner index entries, one per owner record
+  ok   every stored anchor recomputes from its own bytes
+  ok   the Police hold a half for exactly the DMT's records
+  ok   every Police half belongs to the DMT's current record (anchors equal)
+== Stored anchors against the ledger (DMT view on peer0.org1)
+  matched 61, mismatched 0, not on the ledger 0
+  ok   no stored anchor differs from the ledger
+  ok   every stored record was found on the ledger (an unreachable ledger fails here)
+  ok   demo vehicle 8c1a95cc… has a stored record
+  ok   demo vehicle 5da5983b… has a stored record
+  ok   demo vehicle 1339a27a… has a stored record
+  ok   demo vehicle fcbdf05b… has a stored record
+== Owner index and keys
+  ok   the serial owner's fleet (R1–R3) is three vehicles
+  ok   the DMT service's keys give S1 its handle
+== Plates and descriptions (v1.8, DMT database only)
+  ok   the four demo vehicles each have a description
+  ok   no plate is open on two vehicles
+  ok   S1's plate CAB-1234 leads to S1
+custody-verify: 0 failed
